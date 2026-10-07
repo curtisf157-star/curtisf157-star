@@ -2,9 +2,9 @@
 
 ### 📊 Data Analyst | ⚽ Football Analytics | 📈 Power BI | 🐍 Python | 🗄️ SQL
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Curtis%20Ferdinand-0A66C2?style=for-the-badge\&logo=linkedin\&logoColor=white)](https://www.linkedin.com/in/curtis-ferdinand-a56232113)
-[![GitHub](https://img.shields.io/badge/GitHub-curtisf157--star-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/curtisf157-star)
-[![CF Analytics](https://img.shields.io/badge/CF%20Analytics-Football%20Driven%20Data-1D4ED8?style=for-the-badge\&logo=google-chrome\&logoColor=white)](https://cfanalytics.uk)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Curtis%20Ferdinand-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/curtis-ferdinand-a56232113)
+[![GitHub](https://img.shields.io/badge/GitHub-curtisf157--star-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/curtisf157-star)
+[![CF Analytics](https://img.shields.io/badge/CF%20Analytics-Football%20Driven%20Data-1D4ED8?style=for-the-badge&logo=google-chrome&logoColor=white)](https://cfanalytics.uk)
 
 ---
 
@@ -33,9 +33,9 @@ My focus is on turning raw or messy datasets into information that is **accurate
 
 ### 📊 Data Analysis
 
-![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=flat-square\&logo=microsoftexcel\&logoColor=white)
-![Power Query](https://img.shields.io/badge/Power_Query-742774?style=flat-square\&logo=microsoft\&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square\&logo=powerbi\&logoColor=black)
+![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=flat-square&logo=microsoftexcel&logoColor=white)
+![Power Query](https://img.shields.io/badge/Power_Query-742774?style=flat-square&logo=microsoft&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black)
 
 * Data cleaning
 * Data validation
@@ -48,10 +48,10 @@ My focus is on turning raw or messy datasets into information that is **accurate
 
 ### 🗄️ Databases & Programming
 
-![SQL](https://img.shields.io/badge/SQL-336791?style=flat-square\&logo=postgresql\&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square\&logo=python\&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square\&logo=sqlite\&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square\&logo=pandas\&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-336791?style=flat-square&logo=postgresql&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
 
 * SQL querying
 * Relational databases
@@ -85,172 +85,46 @@ A football analytics portfolio project using World Cup data to demonstrate datab
 
 ---
 
-## 🧹 Data Cleaning & Analysis
+## 🧹 HR & E-commerce Data Cleaning (Power Query M)
 
-Practical data-analysis projects focused on taking raw datasets and converting them into structured, reliable information.
+A paired data-cleaning project that takes two deliberately messy source datasets and produces analysis-ready tables using **Power Query (M)** inside Power BI.
 
-### Typical workflow
+**Report file:** `Query_1_2.pbix`
+**M source files:** `hr-cleaning.md`, `ecommerce_cleaning.md`
 
-```text
-Raw Dataset
-     ↓
-Data Inspection
-     ↓
-Data Cleaning
-     ↓
-Validation
-     ↓
-Transformation
-     ↓
-Analysis
-     ↓
-Visualisation
-     ↓
-Actionable Insight
-```
+> The `.md` files are used purely as a plain-text container for the M code — no Power Query/M extension needed to edit them. Copy only the code, never the markdown fences, when pasting back into Power BI.
 
-The objective is not simply to produce a clean spreadsheet.
+### Query1 — `hr_clean` (from `hr_attrition_messy.csv`)
 
-The objective is to make the dataset **usable for a real decision**.
+* Forces all columns to `text` before parsing, so parsing is deterministic.
+* Normalises:
+  * **Gender** → `Male` / `Female`
+  * **Department** → `Marketing`, `IT`, `HR`, `Operations`, `Engineering`, `Sales`, `Legal`, `Finance`
+  * **Region** → `North America`, `Latin America`, `Asia Pacific`, `Middle East`, `Europe`
+  * **Attrition** → `Yes` / `No`
+* Parses dates across 7 formats:
+  `yyyy-MM-dd`, `dd/MM/yyyy`, `MM/dd/yyyy`, `MM-dd-yyyy`, `dd-MM-yyyy`, `dd MMM yyyy` (en-GB), `MMM dd, yyyy` (en-US).
+* Parses salary, including `$`, `,`, `k` suffixes, and junk tokens (`n/a`, `tbd`, `confidential`, `null`, `na`).
+* Projects final columns to match `clean.py` / `02_clean_hr.sql`.
 
----
+### Query2 — `ecommerce_clean` (from `ecommerce_retail_transactions_raw.csv`)
 
-# ⚽ CF Analytics
+* Deduplicates on `Order_ID` using the same caveat as the SQL
+  (`ROW_NUMBER() … ORDER BY Order_Date` on the **raw string**).
+* Normalises:
+  * **Payment_Method** → `Net Banking`, `Cash on Delivery`, `Credit Card`, `Debit Card`, `UPI`, `PayPal`
+  * **Country** → `USA`, `UK`, `Canada`, `Australia`, `Germany`, `UAE`, `India`
+  * **Order_Status** → `Delivered`, `Shipped`, `Pending`, `Cancelled`, `Returned`
+* Parses `Order_Date` with the same 7-format cascade as Query1.
+* `Quantity` is nulled if `<= 0`; `Discount_Percent` defaults to `0` when missing.
+* Projects final columns to match `clean.py` / `03_clean_ecommerce.sql`.
 
-## Football Driven Data
+### How to load into Power BI
 
-**CF Analytics** is my football analytics venture, combining football knowledge with data, video analysis and performance reporting.
-
-### Areas of analysis
-
-* ⚽ Team performance
-* 👤 Player performance
-* 🎯 Player development
-* 🔎 Scouting
-* 📹 Video analysis
-* 📊 Match analysis
-* 🏃 GPS performance data
-* 📈 Performance reporting
-
-### Philosophy
-
-> **Data should never dictate how a player plays; it should inform the strategy around them.**
-
-Football is not played inside a spreadsheet.
-
-Data provides another layer of information that can help coaches and clubs understand what is happening on the pitch.
-
-🌐 **[Visit CF Analytics](https://cfanalytics.uk)**
-
----
-
-# 📈 My Data Workflow
-
-I approach analysis as a process rather than simply opening a dashboard tool.
-
-```text
-        DATA
-          │
-          ▼
-   ┌─────────────┐
-   │   Inspect   │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │    Clean    │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │  Validate   │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │ Transform   │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │   Analyse   │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │ Visualise   │
-   └──────┬──────┘
-          ▼
-   ┌─────────────┐
-   │   Insight   │
-   └─────────────┘
-```
-
----
-
-# 🎯 Currently Developing
-
-![Power BI](https://img.shields.io/badge/Power_BI-Developing-F2C811?style=flat-square\&logo=powerbi\&logoColor=black)
-![Python](https://img.shields.io/badge/Python-Developing-3776AB?style=flat-square\&logo=python\&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-Developing-336791?style=flat-square\&logo=postgresql\&logoColor=white)
-
-* 📊 Advanced Power BI
-* 🧮 DAX
-* 🔄 Power Query
-* 🐍 Python for data analysis
-* 🗄️ SQL
-* 📈 Business intelligence
-* 📊 Dashboard design
-* ⚽ Football analytics
-* 🤖 AI-assisted analytical workflows
-
----
-
-# 💼 Professional Interests
-
-I am interested in opportunities involving:
-
-| Area                     | Focus                                            |
-| ------------------------ | ------------------------------------------------ |
-| 📊 Data Analysis         | Cleaning, analysing and interpreting datasets    |
-| 📈 Business Intelligence | Power BI, dashboards and reporting               |
-| 📑 Reporting             | KPI and performance reporting                    |
-| 🧹 Data Quality          | Validation, cleaning and preparation             |
-| 🗄️ SQL                  | Querying and analysing structured data           |
-| 🐍 Python                | Data manipulation and analysis                   |
-| 🏥 Healthcare            | NHS data and administrative analysis             |
-| ⚽ Sports Analytics       | Football performance and recruitment             |
-| 💻 Freelance             | Data cleaning, reporting and analytical projects |
-
----
-
-# 🧠 Data Philosophy
-
-Numbers are useful because they help us ask better questions.
-
-They are not automatically the answer.
-
-My approach is to combine:
-
-**Data + Context + Domain Knowledge + Critical Thinking**
-
-to produce analysis that people can actually use.
-
----
-
-# 🔗 Connect With Me
-
-### 💼 LinkedIn
-
-[![LinkedIn](https://img.shields.io/badge/Connect_on_LinkedIn-0A66C2?style=for-the-badge\&logo=linkedin\&logoColor=white)](https://www.linkedin.com/in/curtis-ferdinand-a56232113)
-
-### ⚽ CF Analytics
-
-[![CF Analytics](https://img.shields.io/badge/Visit_CF_Analytics-1D4ED8?style=for-the-badge\&logo=google-chrome\&logoColor=white)](https://cfanalytics.uk)
-
-### 💻 GitHub
-
-[![GitHub](https://img.shields.io/badge/View_My_Projects-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/curtisf157-star)
-
----
-
-## ⚽ Football Driven Data
-
-**Curtis Ferdinand | Data Analyst | CF Analytics**
-
-*Turning data into information. Turning information into better questions.*
+1. Open `Query_1_2.pbix` in **Power BI Desktop**.
+2. **Transform Data** → **Home** → **New Source** → **Blank Query** → **Advanced Editor**.
+3. Paste the contents of `hr-cleaning.md` (code only). Rename the query to **Query1**.
+4. Repeat step 2, paste `ecommerce_cleaning.md`, rename to **Query2**.
+5. In each query, replace `FilePath` with your own path, e.g.
+   ```m
+   FilePath = "C:\Users\<you>\Downloads\clean-data\hr_attrition_messy.csv"
